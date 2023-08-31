@@ -1,0 +1,12 @@
+.search-form {
+  background-color: hsl(150, 64%, 43%);
+  padding: 20px 10px;
+  text-align: center;
+}
+
+.search-form input,
+.form-btn{
+border-radius: 5px;
+border: 1px solid;
+
+}
