@@ -9,7 +9,7 @@ export async function getFetch(name, currentPage = 1) {
     params: {
       key: API_KEY,
       q: name,
-      per_page: 5,
+      per_page: 40,
       page: currentPage,
       image_type: 'photo',
       orientation: 'horizontal',

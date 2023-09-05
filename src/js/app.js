@@ -7,12 +7,19 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 refs.formEl.addEventListener('submit', handlerSubmit);
 
+let lightbox = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+});
+
 let queryValue;
+let inputValue;
+
+let page;
 
 async function handlerSubmit(e) {
+  window.scrollTo(0,0);
   e.preventDefault();
-  const inputValue = e.target.searchQuery.value;
-
+  inputValue = e.target.searchQuery.value;
   if (inputValue === '') {
     return;
   }
@@ -48,10 +55,9 @@ async function handlerSubmit(e) {
           downloads
         )
     );
-    refs.galleryEl.insertAdjacentHTML('beforeend', gallery);
-    let lightbox = new SimpleLightbox('.gallery a', {
-      captionDelay: 250,
-    });
+    refs.galleryEl.innerHTML = gallery;
+    page = 1;
+    lightbox.refresh();
     Notiflix.Notify.success(
       `Hooray! We found ${response.data.totalHits} images.`
     );
@@ -62,37 +68,53 @@ async function handlerSubmit(e) {
   }
 }
 
-let page = 1;
-
 refs.btnLoadMore.addEventListener('click', handlerLoadMore);
 
 async function handlerLoadMore(e) {
   page += 1;
-  const response = await getFetch(queryValue, page);
-  const {data : {hits}} = response;
+  
+  try {
+    const response = await getFetch(queryValue, page);
+  const {
+    data: { hits },
+  } = response;
   const gallery = hits.map(
     ({
+      webformatURL,
+      largeImageURL,
+      tags,
+      likes,
+      views,
+      comments,
+      downloads,
+    }) =>
+      createMarkup(
         webformatURL,
         largeImageURL,
         tags,
         likes,
         views,
         comments,
-        downloads,
-      }) =>
-        createMarkup(
-          webformatURL,
-          largeImageURL,
-          tags,
-          likes,
-          views,
-          comments,
-          downloads
-        )
-  )
+        downloads
+      )
+  );
   refs.galleryEl.insertAdjacentHTML('beforeend', gallery);
-  
-//  refresh(), який обов'язково потрібно викликати щоразу після додавання нової групи карток зображень
-
-
+  lightbox.refresh();
+      //    console.log(response.config.params.page);
+      //  console.log(response.data.totalHits);
+      //  console.log(response.config.params.per_page);
+  if (
+    response.config.params.page >=
+    response.data.totalHits / response.config.params.per_page
+  ){
+    refs.btnLoadMore.classList.add('visually-hidden');
+    Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."); 
+  }
+  } catch (error) {
+    refs.btnLoadMore.classList.add('visually-hidden');
+    Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."
+    ); 
+  }
 }
