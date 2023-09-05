@@ -33,7 +33,7 @@ async function handlerSubmit(e) {
       return;
     }
     const {
-      data: { hits },
+      data: { hits }
     } = response;
     const gallery = hits.map(
       ({
@@ -55,7 +55,7 @@ async function handlerSubmit(e) {
           downloads
         )
     );
-    refs.galleryEl.innerHTML = gallery;
+    refs.galleryEl.innerHTML = gallery.join('');
     page = 1;
     lightbox.refresh();
     Notiflix.Notify.success(
@@ -76,7 +76,7 @@ async function handlerLoadMore(e) {
   try {
     const response = await getFetch(queryValue, page);
   const {
-    data: { hits },
+    data: { hits }
   } = response;
   const gallery = hits.map(
     ({
@@ -86,7 +86,7 @@ async function handlerLoadMore(e) {
       likes,
       views,
       comments,
-      downloads,
+      downloads
     }) =>
       createMarkup(
         webformatURL,
@@ -98,7 +98,7 @@ async function handlerLoadMore(e) {
         downloads
       )
   );
-  refs.galleryEl.insertAdjacentHTML('beforeend', gallery);
+    refs.galleryEl.insertAdjacentHTML('beforeend',gallery.join(''));
   lightbox.refresh();
       //    console.log(response.config.params.page);
       //  console.log(response.data.totalHits);
