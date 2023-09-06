@@ -61,8 +61,8 @@ async function handlerSubmit(e) {
           comments,
           downloads
         )
-    );
-    refs.galleryEl.innerHTML = gallery.join('');
+    ).join('');
+    refs.galleryEl.innerHTML = gallery;
     page = 1;
     lightbox.refresh();
     Notiflix.Notify.success(
@@ -108,8 +108,8 @@ async function handlerLoadMore(e) {
           comments,
           downloads
         )
-    );
-    refs.galleryEl.insertAdjacentHTML('beforeend', gallery.join(''));
+    ).join('');
+    refs.galleryEl.insertAdjacentHTML('beforeend', gallery);
     lightbox.refresh();
 
     if (
