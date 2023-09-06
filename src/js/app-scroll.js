@@ -76,6 +76,7 @@ async function handlerSubmit(e) {
       }
       queryValue = inputValue;
     } catch (error) {
+        console.log(error);
     Notiflix.Notify.failure('ERROR!!! Something went wrong!!!');
   }
 
