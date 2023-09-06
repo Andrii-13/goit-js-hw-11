@@ -19,6 +19,7 @@ const observer = new IntersectionObserver(handlerLoadMore, option);
 let queryValue;
 let inputValue;
 let totalNumberOfPges = 20;
+let page;
 
 async function handlerSubmit(e) {
   window.scrollTo(0, 0);
