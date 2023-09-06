@@ -89,10 +89,10 @@ async function handlerSubmit(e) {
 
 function handlerLoadMore(entries){
     entries.forEach(async entry=>{
-      console.log(entry);
-      console.log(page);
-      console.log(totalNumberOfPges);
-      console.log(queryValue);
+    //   console.log(entry);
+    //   console.log(page);
+    //   console.log(totalNumberOfPges);
+    //   console.log(queryValue);
 if (entry.isIntersecting){
   page +=1
   try {
@@ -123,7 +123,8 @@ if (entry.isIntersecting){
     refs.galleryEl.insertAdjacentHTML('beforeend', gallery);
     lightbox.refresh();
 
-    if (response.data.totalHits >= totalNumberOfPges) {
+    if (response.config.params.page >=
+        response.data.totalHits / response.config.params.per_page) {
       observer.unobserve(refs.guard);
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
