@@ -46,27 +46,8 @@ async function handlerSubmit(e) {
     const {
       data: { hits },
     } = response;
-    const gallery = hits.map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) =>
-        createMarkup(
-          webformatURL,
-          largeImageURL,
-          tags,
-          likes,
-          views,
-          comments,
-          downloads
-        )
-    ).join('');
-    refs.galleryEl.innerHTML = gallery;
+    
+    refs.galleryEl.innerHTML = createMarkup(hits);
     page = 1;
     lightbox.refresh();
     Notiflix.Notify.success(
@@ -102,27 +83,8 @@ if (entry.isIntersecting){
     const {
       data: { hits },
     } = response;
-    const gallery = hits.map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) =>
-        createMarkup(
-          webformatURL,
-          largeImageURL,
-          tags,
-          likes,
-          views,
-          comments,
-          downloads
-        )
-    ).join('');
-    refs.galleryEl.insertAdjacentHTML('beforeend', gallery);
+   
+    refs.galleryEl.insertAdjacentHTML('beforeend', createMarkup(hits));
     lightbox.refresh();
 
     if (response.config.params.page >=

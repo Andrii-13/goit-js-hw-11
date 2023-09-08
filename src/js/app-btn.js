@@ -42,27 +42,8 @@ async function handlerSubmit(e) {
     const {
       data: { hits },
     } = response;
-    const gallery = hits.map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) =>
-        createMarkup(
-          webformatURL,
-          largeImageURL,
-          tags,
-          likes,
-          views,
-          comments,
-          downloads
-        )
-    ).join('');
-    refs.galleryEl.innerHTML = gallery;
+  
+    refs.galleryEl.innerHTML = createMarkup(hits);
     page = 1;
     lightbox.refresh();
     Notiflix.Notify.success(
@@ -86,30 +67,9 @@ async function handlerLoadMore(e) {
 
   try {
     const response = await getFetch(queryValue, totalNumberOfPges, page);
-    const {
-      data: { hits },
-    } = response;
-    const gallery = hits.map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) =>
-        createMarkup(
-          webformatURL,
-          largeImageURL,
-          tags,
-          likes,
-          views,
-          comments,
-          downloads
-        )
-    ).join('');
-    refs.galleryEl.insertAdjacentHTML('beforeend', gallery);
+    const {data: { hits }} = response;
+    
+    refs.galleryEl.insertAdjacentHTML('beforeend', createMarkup(hits));
     lightbox.refresh();
 
     if (

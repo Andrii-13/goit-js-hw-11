@@ -1,9 +1,17 @@
-export function createMarkup(urlImg, largeImg, alt, likes, wiews, comments, downloads) {
-    return `
+export function createMarkup(hits) {
+    return hits.map(({
+      webformatURL,
+      largeImageURL,
+      tags,
+      likes,
+      views,
+      comments,
+      downloads,
+    }) => `
     <div class="photo-card">
     <div class="thumb">
-        <a class="gallery__link" href="${largeImg}">
-            <img src="${urlImg}" alt="${alt}" loading="lazy" class='gallery__image' />
+        <a class="gallery__link" href="${largeImageURL}">
+            <img src="${webformatURL}" alt="${tags}" loading="lazy" class='gallery__image' />
         </a>
     </div>
     <div class="info">
@@ -11,7 +19,7 @@ export function createMarkup(urlImg, largeImg, alt, likes, wiews, comments, down
         <b>Likes</b>${likes}
       </p>
       <p class="info-item">
-        <b>Views</b>${wiews}
+        <b>Views</b>${views}
       </p>
       <p class="info-item">
         <b>Comments</b>${comments}
@@ -20,5 +28,5 @@ export function createMarkup(urlImg, largeImg, alt, likes, wiews, comments, down
         <b>Downloads</b>${downloads}
       </p>
     </div>
-  </div>`
+  </div>`).join('');
 }
